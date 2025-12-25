@@ -1,0 +1,17 @@
+{
+  "num_classes": 101,
+  "nutrition_targets": [
+    "calories",
+    "protein",
+    "fat",
+    "carbs",
+    "sugars",
+    "sodium"
+  ],
+  "backbone": "resnet18",
+  "input_size": [
+    224,
+    224
+  ],
+  "task": "food classification + nutrition regression"
+}
