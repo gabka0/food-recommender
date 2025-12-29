@@ -66,8 +66,15 @@ async def load_artifacts():
     print(f"Using device: {device}")
     
     # Paths to model artifacts
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    models_dir = os.path.join(base_dir, "models")
+    # In Docker/Cloud Run: models are at /app/models
+    # In local dev: models are at ../models (parent directory)
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    if os.path.exists(os.path.join(current_dir, "models")):
+        models_dir = os.path.join(current_dir, "models")
+    else:
+        # Fallback to parent directory structure (local development)
+        base_dir = os.path.dirname(current_dir)
+        models_dir = os.path.join(base_dir, "models")
     
     model_path = os.path.join(models_dir, "food101_multitask_resnet18.pt")
     prototypes_path = os.path.join(models_dir, "food101_class_prototypes.pt")
