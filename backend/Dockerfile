@@ -23,10 +23,9 @@ COPY backend/ .
 # Copy models directory (from parent directory context)
 COPY models/ /app/models/
 
-# Expose port (Cloud Run uses PORT env var)
-ENV PORT=8080
+# Cloud Run will set PORT env var automatically
 EXPOSE 8080
 
-# Run the application
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Run the application - use PORT env var from Cloud Run
+CMD python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8080}
 
